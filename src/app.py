@@ -1,5 +1,6 @@
 from tkinter import Tk, Label, Entry, Button, Text, Scrollbar, VERTICAL, RIGHT, Y, END, Frame, PhotoImage
 from tkinter.font import Font
+from utils.response_handler import get_response
 
 class ChatbotUI:
     def __init__(self, master):
@@ -21,9 +22,9 @@ class ChatbotUI:
         self.header_frame.pack(fill="x")
 
         # Add a logo to the header
-        self.logo_image = PhotoImage(file="logo.png")  # Replace with your logo file
-        self.logo_label = Label(self.header_frame, image=self.logo_image, bg="#2c2c3e")
-        self.logo_label.pack(side="left", padx=10, pady=10)
+        # self.logo_image = PhotoImage(file="logo.png")  # Replace with your logo file
+        # self.logo_label = Label(self.header_frame, image=self.logo_image, bg="#2c2c3e")
+        # self.logo_label.pack(side="left", padx=10, pady=10)
 
         self.title_label = Label(
             self.header_frame,
@@ -107,7 +108,7 @@ class ChatbotUI:
     def send_query(self):
         user_query = self.entry.get()
         self.response_area.insert(END, f"You: {user_query}\n")
-        response = self.get_response(user_query)
+        response = get_response(user_query)
         self.response_area.insert(END, f"Chatbot: {response}\n\n")
         self.entry.delete(0, END)
 
