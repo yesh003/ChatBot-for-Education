@@ -1,38 +1,20 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-import time
+from revChatGPT.V1 import Chatbot
 
 def get_response(user_query):
     """
-    Automates interaction with ChatGPT's web interface to get a response.
+    Sends the user query to ChatGPT and returns the response.
     """
-    # Path to your ChromeDriver
-    driver_path = "/path/to/chromedriver"  # Replace with the actual path to your ChromeDriver
+#     chatbot = Chatbot(config={
+#     "session_token": "your-session-token"  # Replace with your session token
+# })
+    chatbot = Chatbot(config={
+        "email": "your-email@example.com",  # Replace with your OpenAI email
+        "password": "your-password"         # Replace with your OpenAI password
+    })
 
-    # Open ChatGPT in a browser
-    driver = webdriver.Chrome(driver_path)
-    driver.get("https://chat.openai.com/")
-
-    # Wait for the page to load
-    time.sleep(5)
-
-    # Log in manually if required (this step cannot be automated due to CAPTCHA)
-
-    # Find the input box and send the user query
-    input_box = driver.find_element(By.TAG_NAME, "textarea")
-    input_box.send_keys(user_query)
-    input_box.send_keys(Keys.RETURN)
-
-    # Wait for the response to load
-    time.sleep(10)
-
-    # Get the response text
-    response_elements = driver.find_elements(By.CSS_SELECTOR, ".markdown")
-    response = response_elements[-1].text if response_elements else "No response received."
-
-    # Close the browser
-    driver.quit()
+    response = ""
+    for data in chatbot.ask(user_query):
+        response = data["message"]
 
     return response
 
